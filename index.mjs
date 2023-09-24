@@ -12,6 +12,7 @@ const storage = multer.memoryStorage(); // store the file in memory
 const upload = multer({ storage: storage });
 
 app.post("/reduce", upload.single("file"), async (req, res) => {
+  const { quality } = req.body;
   try {
     if (!req.file) {
       return res.status(400).send("No file uploaded");
@@ -21,7 +22,7 @@ app.post("/reduce", upload.single("file"), async (req, res) => {
 
     const buffer = await sharp(req.file.buffer)
       .resize({ width: 500 }) // You can change this value or even make it dynamic based on user input
-      .jpeg({ quality: 20 }) // Change quality to reduce the size
+      .jpeg({ quality: quality }) // Change quality to reduce the size
       .toBuffer();
 
     const reducedFileSize = buffer.length; // Size in bytes
@@ -36,7 +37,6 @@ app.post("/reduce", upload.single("file"), async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
 
 app.post("/reduce-pdf", upload.single("file"), async (req, res) => {
   try {
