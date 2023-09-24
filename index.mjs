@@ -22,7 +22,7 @@ app.post("/reduce", upload.single("file"), async (req, res) => {
 
     const buffer = await sharp(req.file.buffer)
       .resize({ width: 500 }) // You can change this value or even make it dynamic based on user input
-      .jpeg({ quality: quality.parseInt() }) // Change quality to reduce the size
+      .jpeg({ quality:  parseInt(quality) }) // Change quality to reduce the size
       .toBuffer();
 
     const reducedFileSize = buffer.length; // Size in bytes
