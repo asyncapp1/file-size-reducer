@@ -5,7 +5,7 @@ import multer from "multer";
 import { PDFDocument } from "pdf-lib";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Setup multer for file uploads
 const storage = multer.memoryStorage(); // store the file in memory
